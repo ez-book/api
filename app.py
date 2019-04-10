@@ -40,6 +40,12 @@ class Itenary(db.Model):
   def get(id):
     return db.session.query(Itenary).filter(Itenary.id == id).all()
 
+  @staticmethod
+  def getByURL(url):
+    id = str(uuid.uuid3(uuid.NAMESPACE_URL, url))
+    return db.session.query(Itenary).filter(Itenary.id == id).all()
+
+
   def post(self):
     rows = self.get(self.id)
     if len(rows) > 0:
@@ -68,6 +74,21 @@ def get_itenary(id):
 
   return jsonify(
     url = data[0].url,
+    id=data[0].id,
+    places=data[0].places.split(','),
+  )
+
+@app.route('/itenary', methods=['GET'])
+def get_itenary_url():
+  url = request.args.get('url')
+  data = Itenary.getByURL(url)
+
+  if len(data) == 0:
+    return jsonify(
+      url=url,
+    )
+  return jsonify(
+    url=data[0].url,
     id=data[0].id,
     places=data[0].places.split(','),
   )
