@@ -3,14 +3,17 @@ from flask import Flask, request
 from flask import jsonify
 import json
 from flask import abort
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import uuid
 import bookingapi
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 load_dotenv()
 
+app.config['CORS_HEADERS'] = ['Content-Type']
 app.config["FLASK_APP"] = os.getenv("FLASK_APP")
 app.config["FLASK_ENV"] = os.getenv("FLASK_ENV")
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
@@ -111,7 +114,7 @@ def post_itenary():
     places = dataDict['places']
   result = Itenary(url, dataDict['places'])
   result.post()
-  return result.id
+  return jsonify(id=result.id)
 
 @app.route('/city', methods=['GET'])
 def get_city_id():

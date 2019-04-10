@@ -1,7 +1,11 @@
 argh==0.26.2
+certifi==2019.3.9
+chardet==3.0.4
 Click==7.0
 Flask==1.0.2
+Flask-Cors==3.0.7
 Flask-SQLAlchemy==2.3.2
+idna==2.8
 itsdangerous==1.1.0
 Jinja2==2.10
 MarkupSafe==1.1.1
@@ -9,7 +13,9 @@ pathtools==0.1.2
 psycopg2==2.7.7
 python-dotenv==0.10.1
 PyYAML==5.1
+requests==2.21.0
+six==1.12.0
 SQLAlchemy==1.3.2
+urllib3==1.24.1
 watchdog==0.9.0
 Werkzeug==0.15.2
-requests==2.18.1
