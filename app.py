@@ -6,6 +6,7 @@ from flask import abort
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import uuid
+import bookingapi
 
 app = Flask(__name__)
 load_dotenv()
@@ -15,6 +16,8 @@ app.config["FLASK_ENV"] = os.getenv("FLASK_ENV")
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
 
 db = SQLAlchemy(app)
+
+b = bookingapi.BookingAPI()
 
 class Test_Person(db.Model):
   __tablename__ = 'test_person'
@@ -109,6 +112,24 @@ def post_itenary():
   result = Itenary(url, dataDict['places'])
   result.post()
   return result.id
+
+@app.route('/city', methods=['GET'])
+def get_city_id():
+  name = request.args.get('name')
+  return jsonify(b.get_city_id_by_city_name(name))
+
+@app.route('/hotel/city', methods=['GET'])
+def get_hotels_in_city():
+  name = request.args.get('name')
+  return jsonify(b.get_hotels_by_city_name(name))
+
+@app.route('/hotel/city/available', methods=['GET'])
+def get_available_hotels_in_city():
+  checkin = request.args.get('checkin')
+  checkout = request.args.get('checkout')
+  name = request.args.get('name')
+  room = request.args.get('room')
+  return jsonify(b.get_availability_hotel(checkin, checkout, name, room))
 
 
 if __name__ == '__main__':
