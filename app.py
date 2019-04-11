@@ -114,7 +114,11 @@ def post_itenary():
     places = dataDict['places']
   result = Itenary(url, dataDict['places'])
   result.post()
-  return jsonify(id=result.id)
+  return jsonify(
+    id=result.id,
+    places=places,
+    url=url,
+  )
 
 @app.route('/city', methods=['GET'])
 def get_city_id():
