@@ -22,16 +22,6 @@ db = SQLAlchemy(app)
 
 b = bookingapi.BookingAPI()
 
-class Test_Person(db.Model):
-  __tablename__ = 'test_person'
-
-  id = db.Column(db.Integer(), primary_key=True)
-  name = db.Column(db.String(80))
-
-  def __init__(self, name):
-    self.name = name
-
-
 class Itenary(db.Model):
   __tablename__ = 'itenary'
   id = db.Column(db.String(50), primary_key=True)
@@ -59,17 +49,9 @@ class Itenary(db.Model):
     db.session.add(self)
     db.session.commit()
 
-
-
-
 @app.route('/')
 def hello():
   return 'Hello, ' + os.getenv("NAME") + '!'
-
-@app.route('/name/<id>', methods=['GET'])
-def get_name(id):
-  # There's probably a better way to do this, but it's 2am and I just want this to work ...
-  return db.session.query(Test_Person).filter(Test_Person.id == int(id, 10)).all()[0].name
 
 @app.route('/itenary/<id>', methods=['GET'])
 def get_itenary(id):
@@ -137,7 +119,6 @@ def get_available_hotels_in_city():
   name = request.args.get('name')
   room = request.args.get('room')
   return jsonify(b.get_availability_hotel(checkin, checkout, name, room))
-
 
 if __name__ == '__main__':
   app.run()
