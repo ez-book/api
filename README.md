@@ -61,7 +61,7 @@ CREATE DATABASE ez_book_dev;
 \c ez_book_dev
 ```
 ```
-CREATE TABLE test_person(id serial PRIMARY KEY NOT NULL, name VARCHAR(40) NOT NULL CHECK (name <> ''));
+CREATE TABLE itenary(id VARCHAR(50) PRIMARY KEY NOT NULL, places VARCHAR(256), url VARCHAR(256));
 ```
 
 To create a new user:
