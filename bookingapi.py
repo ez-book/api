@@ -64,7 +64,6 @@ class BookingAPI(object):
             params['city_ids'] = [city_id]
             params['rows'] = 10
 
-        print(params['hotel_ids'])
         hotels = self._get_data(endpoint, params)
         return json.loads(hotels)
 
