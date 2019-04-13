@@ -1,13 +1,15 @@
 import json
 import os
-
+from dotenv import load_dotenv
 import requests
 from requests.auth import HTTPBasicAuth
 
+load_dotenv()
+
 BASE_URL = "https://distribution-xml.booking.com/2.4/json/"
 
-USER = 'akoyya'
-PW = 'randompassword' #os.environ.get('BOOKING_PW')
+USER = os.getenv("BOOKING_USER")
+PW = os.getenv("BOOKING_PW")
 
 class BookingAPI(object):
     def __init__(self):
@@ -64,7 +66,7 @@ class BookingAPI(object):
             params['city_ids'] = [city_id]
             params['rows'] = 10
 
-        print(params['hotel_ids'])
+        # print(params['hotel_ids'])
         hotels = self._get_data(endpoint, params)
         return json.loads(hotels)
 
